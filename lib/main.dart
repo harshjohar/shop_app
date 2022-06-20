@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lato',
         ),
         debugShowCheckedModeBanner: false,
-        home: ProductOverviewScreen(),
+        home: const ProductOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (context) =>
               const ProductDetailScreen(),
