@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:shop_app/screens/orders.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -12,7 +10,7 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text('Hellooo!'),
+            title: const Text('Hellooo!'),
             automaticallyImplyLeading: false,
           ),
           const Divider(),
