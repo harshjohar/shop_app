@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'SHOP APP',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
-              .copyWith(secondary: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber)
+              .copyWith(secondary: Colors.red),
           fontFamily: 'Lato',
         ),
         debugShowCheckedModeBanner: false,
