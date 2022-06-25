@@ -52,39 +52,37 @@ class Products with ChangeNotifier {
     return _items.firstWhere((element) => element.id == id);
   }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     final url = Uri.parse(
       'https://shop-app-62ecd-default-rtdb.firebaseio.com/products.json',
     );
-    return http
-        .post(
-      url,
-      body: json.encode(
-        {
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'isFavorite': product.isFavorite,
-        },
-      ),
-    )
-        .then(
-      (res) {
-        final resProduct = json.decode(res.body);
-        final newProduct = Product(
-          id: resProduct['name'],
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          imageUrl: product.imageUrl,
-        );
-        _items.add(newProduct);
-        notifyListeners();
-      },
-    ).catchError((error) {
-      throw error;
-    });
+
+    try {
+      final res = await http.post(
+        url,
+        body: json.encode(
+          {
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'price': product.price,
+            'isFavorite': product.isFavorite,
+          },
+        ),
+      );
+      final resProduct = json.decode(res.body);
+      final newProduct = Product(
+        id: resProduct['name'],
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
+      _items.add(newProduct);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
