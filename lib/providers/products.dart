@@ -5,7 +5,7 @@ import 'package:shop_app/providers/product.dart';
 import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
-  final List<Product> _items = [
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -95,5 +95,33 @@ class Products with ChangeNotifier {
   void deleteProduct(String id) {
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
+  }
+
+  Future<void> fetchAndSetProducts() async {
+    final url = Uri.parse(
+      'https://shop-app-62ecd-default-rtdb.firebaseio.com/products.json',
+    );
+
+    try {
+      final res = await http.get(url);
+      final data = json.decode(res.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      data.forEach((id, prodData) {
+        loadedProducts.add(
+          Product(
+            id: id,
+            title: prodData['title'],
+            description: prodData['description'],
+            price: prodData['price'],
+            imageUrl: prodData['imageUrl'],
+            isFavorite: prodData['isFavorite'],
+          ),
+        );
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
